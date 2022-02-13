@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/students")
 public class StudentController {
 
-
     @Autowired
     StudentService studentService;
 
@@ -28,7 +27,7 @@ public class StudentController {
         }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка");
+            return ResponseEntity.badRequest().body("ошибка при добавлении студента");
         }
     }
 
@@ -38,7 +37,7 @@ public class StudentController {
             return ResponseEntity.ok(studentService.getStudent(id));
         } catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("Exception has been occurred");
+            return ResponseEntity.badRequest().body("ошибка при получении студента");
         }
     }
 
@@ -48,7 +47,29 @@ public class StudentController {
             return ResponseEntity.ok(studentService.getStudents());
         } catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("Exception has been occurred");
+            return ResponseEntity.badRequest().body("ошибка при получении студентов");
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity deleteStudent(@RequestParam Long id){
+        try{
+            return ResponseEntity.ok(studentService.deleteStudent(id));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body("произошла ошибка при удалении студента");
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity updateStudent(@RequestBody Student student){
+        try{
+            return ResponseEntity.ok(studentService.updateStudent(student));
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body("произошла ошибка при обновлении студента");
         }
     }
 }

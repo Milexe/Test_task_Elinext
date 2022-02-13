@@ -39,4 +39,17 @@ public class StudentService {
         List<Student> resultList = list.stream().map(Student::toModel).collect(Collectors.toList());
         return resultList;
     }
+
+    public Student deleteStudent(Long id){
+        Student deletedStudent = Student.toModel(studentRepo.findById(id).get());
+        studentRepo.deleteById(id);
+        return deletedStudent;
+    }
+
+    public Student updateStudent(Student student){
+        StudentEntity updatedStudent = studentRepo.findById(student.getId()).get();
+        updatedStudent.setGroup(groupRepo.findByNumber(student.getGroup()));
+        updatedStudent.setName(student.getName());
+        return Student.toModel(studentRepo.save(updatedStudent));
+    }
 }

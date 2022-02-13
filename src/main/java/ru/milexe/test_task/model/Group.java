@@ -2,23 +2,23 @@ package ru.milexe.test_task.model;
 
 import ru.milexe.test_task.entity.GroupEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Group {
     private Long id;
     private String speciality;
-    private long course;
     private long number;
-    private List<Student> students;
+    private List<Student> students = new ArrayList<Student>();
 
     public static Group toModel(GroupEntity group){
         Group model = new Group();
         model.setId(group.getId());
-        model.setCourse(group.getCourse());
         model.setNumber(group.getNumber());
         model.setSpeciality(group.getSpeciality());
-        model.setStudents(group.getStudents().stream().map(Student::toModel).collect(Collectors.toList()));
+        if(group.getStudents() != null)
+            model.setStudents(group.getStudents().stream().map(Student::toModel).collect(Collectors.toList()));
         return model;
     }
     public List<Student> getStudents() {
@@ -43,14 +43,6 @@ public class Group {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
-    }
-
-    public long getCourse() {
-        return course;
-    }
-
-    public void setCourse(long course) {
-        this.course = course;
     }
 
     public long getNumber() {

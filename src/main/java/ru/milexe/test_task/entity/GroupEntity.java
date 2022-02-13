@@ -9,7 +9,6 @@ public class GroupEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String speciality;
-    private long course;
     private long number;
 
     public Long getNumber() {
@@ -52,14 +51,6 @@ public class GroupEntity {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
-    }
-
-    public long getCourse() {
-        return course;
-    }
-
-    public void setCourse(long course) {
-        this.course = course;
     }
 
     public List<StudentEntity> getStudents() {

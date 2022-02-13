@@ -22,7 +22,7 @@ public class GroupController {
         }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка");
+            return ResponseEntity.badRequest().body("произошла ошибка при добавлении группы");
         }
     }
 
@@ -33,7 +33,27 @@ public class GroupController {
         }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка");
+            return ResponseEntity.badRequest().body("произошла ошибка при получении группы");
+        }
+    }
+    @DeleteMapping
+    public ResponseEntity deleteGroup(@RequestParam Long id){
+        try{
+            return ResponseEntity.ok(groupService.deleteGroup(id));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body("произошла ошибка при удалении группы");
+        }
+    }
+    @PutMapping
+    public ResponseEntity updateGroup(@RequestBody GroupEntity group){
+        try{
+            return ResponseEntity.ok(groupService.updateGroup(group));
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body("произошла ошибка при обновлении группы");
         }
     }
 }
