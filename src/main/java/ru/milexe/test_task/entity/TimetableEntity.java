@@ -8,7 +8,7 @@ public class TimetableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date day_of_week;
+    private String day;
 
     @ManyToOne
     @JoinColumn(name="group_id")
@@ -26,12 +26,12 @@ public class TimetableEntity {
         this.id = id;
     }
 
-    public Date getDay_of_week() {
-        return day_of_week;
+    public String getDay() {
+        return day;
     }
 
-    public void setDay_of_week(Date day_of_week) {
-        this.day_of_week = day_of_week;
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public GroupEntity getGroup() {

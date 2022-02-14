@@ -36,6 +36,18 @@ public class GroupController {
             return ResponseEntity.badRequest().body("произошла ошибка при получении группы");
         }
     }
+
+    @GetMapping("/groups")
+    public ResponseEntity getGroups(){
+        try{
+            return ResponseEntity.ok(groupService.getGroups());
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body("произошла ошибка при получении групп");
+        }
+    }
+
     @DeleteMapping
     public ResponseEntity deleteGroup(@RequestParam Long id){
         try{
