@@ -26,7 +26,7 @@ public class TimetableController {
         }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при добавлении занятия");
+            return ResponseEntity.badRequest().body("ошибка при добавлении занятия:" + e.getMessage());
         }
     }
 
@@ -36,7 +36,7 @@ public class TimetableController {
             return ResponseEntity.ok(timetableService.getTimetables());
         } catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при получении занятий");
+            return ResponseEntity.badRequest().body("ошибка при получении занятий:" + e.getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ public class TimetableController {
             return ResponseEntity.ok(timetableService.getTimetablesForGroup(groupNumber, date));
         } catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при получении занятий для группы");
+            return ResponseEntity.badRequest().body("ошибка при получении занятий для группы:" + e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class TimetableController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при удалении занятия");
+            return ResponseEntity.badRequest().body("произошла ошибка при удалении занятия:" + e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class TimetableController {
         }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при обновлении занятия");
+            return ResponseEntity.badRequest().body("произошла ошибка при обновлении занятия:" + e.getMessage());
         }
     }
 }

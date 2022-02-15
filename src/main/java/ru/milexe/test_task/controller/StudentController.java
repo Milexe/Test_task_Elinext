@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.milexe.test_task.entity.GroupEntity;
 import ru.milexe.test_task.entity.StudentEntity;
+import ru.milexe.test_task.exception.DataAlreadyExistsException;
+import ru.milexe.test_task.exception.DataNotFoundException;
 import ru.milexe.test_task.model.Student;
 import ru.milexe.test_task.repository.GroupRepo;
 import ru.milexe.test_task.repository.StudentRepo;
@@ -25,9 +27,13 @@ public class StudentController {
         try{
             return ResponseEntity.ok(studentService.createStudent(student,groupId));
         }
+        catch(DataAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при добавлении студента");
+            return ResponseEntity.badRequest().body("ошибка при добавлении студента:" + e.getMessage());
         }
     }
 
@@ -35,9 +41,14 @@ public class StudentController {
     public ResponseEntity getStudent(@RequestParam Long id){
         try{
             return ResponseEntity.ok(studentService.getStudent(id));
-        } catch(Exception e)
+        }
+        catch(DataNotFoundException e)
         {
-            return ResponseEntity.badRequest().body("ошибка при получении студента");
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body("ошибка при получении студента:" + e.getMessage());
         }
     }
 
@@ -47,7 +58,7 @@ public class StudentController {
             return ResponseEntity.ok(studentService.getStudents());
         } catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при получении студентов");
+            return ResponseEntity.badRequest().body("ошибка при получении студентов:" + e.getMessage());
         }
     }
 
@@ -56,9 +67,13 @@ public class StudentController {
         try{
             return ResponseEntity.ok(studentService.deleteStudent(id));
         }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch (Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при удалении студента");
+            return ResponseEntity.badRequest().body("произошла ошибка при удалении студента:" + e.getMessage());
         }
     }
 
@@ -67,9 +82,13 @@ public class StudentController {
         try{
             return ResponseEntity.ok(studentService.updateStudent(student));
         }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при обновлении студента");
+            return ResponseEntity.badRequest().body("произошла ошибка при обновлении студента:" + e.getMessage());
         }
     }
 }

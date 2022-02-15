@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.milexe.test_task.entity.GroupEntity;
 import ru.milexe.test_task.entity.StudentEntity;
+import ru.milexe.test_task.exception.DataAlreadyExistsException;
+import ru.milexe.test_task.exception.DataNotFoundException;
 import ru.milexe.test_task.repository.GroupRepo;
 import ru.milexe.test_task.service.GroupService;
 
@@ -20,9 +22,13 @@ public class GroupController {
         try{
             return ResponseEntity.ok(groupService.createGroup(group));
         }
+        catch(DataAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при добавлении группы");
+            return ResponseEntity.badRequest().body("произошла ошибка при добавлении группы:" + e.getMessage());
         }
     }
 
@@ -31,9 +37,13 @@ public class GroupController {
         try{
             return ResponseEntity.ok(groupService.getGroup(id));
         }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при получении группы");
+            return ResponseEntity.badRequest().body("произошла ошибка при получении группы:" + e.getMessage());
         }
     }
 
@@ -44,7 +54,7 @@ public class GroupController {
         }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при получении групп");
+            return ResponseEntity.badRequest().body("произошла ошибка при получении групп:" + e.getMessage());
         }
     }
 
@@ -53,9 +63,17 @@ public class GroupController {
         try{
             return ResponseEntity.ok(groupService.deleteGroup(id));
         }
+        catch(DataAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch (Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при удалении группы");
+            return ResponseEntity.badRequest().body("произошла ошибка при удалении группы:" + e.getMessage());
         }
     }
     @PutMapping
@@ -63,9 +81,17 @@ public class GroupController {
         try{
             return ResponseEntity.ok(groupService.updateGroup(group));
         }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch(DataAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при обновлении группы");
+            return ResponseEntity.badRequest().body("произошла ошибка при обновлении группы:" + e.getMessage());
         }
     }
 }

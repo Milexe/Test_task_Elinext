@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.milexe.test_task.entity.LectureEntity;
 import ru.milexe.test_task.entity.StudentEntity;
+import ru.milexe.test_task.exception.DataAlreadyExistsException;
+import ru.milexe.test_task.exception.DataNotFoundException;
 import ru.milexe.test_task.model.Student;
 import ru.milexe.test_task.service.LectureService;
 import ru.milexe.test_task.service.StudentService;
@@ -21,9 +23,13 @@ public class LectureController {
         try{
             return ResponseEntity.ok(lectureService.createLecture(lecture));
         }
+        catch(DataAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при добавлении лекции");
+            return ResponseEntity.badRequest().body("ошибка при добавлении лекции:" + e.getMessage());
         }
     }
 
@@ -31,9 +37,15 @@ public class LectureController {
     public ResponseEntity getLecture(@RequestParam Long id){
         try{
             return ResponseEntity.ok(lectureService.getLecture(id));
-        } catch(Exception e)
+
+        }
+        catch(DataNotFoundException e)
         {
-            return ResponseEntity.badRequest().body("ошибка при получении лекции");
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body("ошибка при получении лекции:" + e.getMessage());
         }
     }
 
@@ -43,7 +55,7 @@ public class LectureController {
             return ResponseEntity.ok(lectureService.getLectures());
         } catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("ошибка при получении лекций");
+            return ResponseEntity.badRequest().body("ошибка при получении лекций:" + e.getMessage());
         }
     }
 
@@ -52,9 +64,17 @@ public class LectureController {
         try{
             return ResponseEntity.ok(lectureService.deleteLecture(id));
         }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch(DataAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch (Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при удалении лекции");
+            return ResponseEntity.badRequest().body("произошла ошибка при удалении лекции:" + e.getMessage());
         }
     }
 
@@ -63,9 +83,13 @@ public class LectureController {
         try{
             return ResponseEntity.ok(lectureService.updateLecture(lecture));
         }
+        catch(DataNotFoundException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         catch(Exception e)
         {
-            return ResponseEntity.badRequest().body("произошла ошибка при обновлении студента");
+            return ResponseEntity.badRequest().body("произошла ошибка при обновлении студента:" + e.getMessage());
         }
     }
 }
