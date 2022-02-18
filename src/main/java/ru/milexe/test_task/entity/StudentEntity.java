@@ -18,6 +18,12 @@ public class StudentEntity {
     public StudentEntity() {
     }
 
+    public StudentEntity(long id, String name, GroupEntity group) {
+        this.id = id;
+        this.name = name;
+        this.group = group;
+    }
+
     public long getId() {
         return id;
     }

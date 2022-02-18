@@ -11,6 +11,12 @@ public class GroupEntity {
     private String speciality;
     private long number;
 
+    public GroupEntity(long id, String speciality, long number) {
+        this.id = id;
+        this.speciality = speciality;
+        this.number = number;
+    }
+
     public Long getNumber() {
         return number;
     }

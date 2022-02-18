@@ -28,7 +28,6 @@ public class StudentService {
             throw new DataAlreadyExistsException("студент уже существует");
         GroupEntity group = groupRepo.findById(groupId).get();
         student.setGroup(group);
-        studentRepo.save(student);
         return Student.toModel(studentRepo.save(student));
     }
 

@@ -50,6 +50,11 @@ public class TimetableEntity {
         this.lecture = lecture;
     }
 
+    public TimetableEntity(GroupEntity group, LectureEntity lecture) {
+        this.group = group;
+        this.lecture = lecture;
+    }
+
     public TimetableEntity() {
     }
 }

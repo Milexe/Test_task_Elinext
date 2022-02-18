@@ -30,7 +30,7 @@ public class GroupService {
 
     public Group getGroup(Long id) throws DataNotFoundException{
         if(!groupRepo.findById(id).isPresent())
-            throw new DataNotFoundException("группа не найдена");
+            throw new DataNotFoundException("группа не найденаa");
         return Group.toModel(groupRepo.findById(id).get());
     }
 
